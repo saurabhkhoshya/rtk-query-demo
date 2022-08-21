@@ -1,10 +1,20 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import {
+  configureStore,
+  combineReducers,
+  ThunkAction,
+  Action,
+} from "@reduxjs/toolkit";
+
+import { pokemonApi } from "./services/api";
+import counterReducer from "../features/counter/counterSlice";
+
+const rootReducer = combineReducers({
+  counter: counterReducer,
+  [pokemonApi.reducerPath]: pokemonApi.reducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;
